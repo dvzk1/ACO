@@ -1,0 +1,4 @@
+dvzk@UMRPC:~/UFG/CAD/TRABFINAL$ gcc -o aco_sequencial ACO.c -lm
+dvzk@UMRPC:~/UFG/CAD/TRABFINAL$ nvcc -o aco ACO.cu -lcudart
+dvzk@UMRPC:~/UFG/CAD/TRABFINAL$ ./aco < /home/dvzk/UFG/CAD/TRABFINAL/MAPS/map25.txt
+dvzk@UMRPC:~/UFG/CAD/TRABFINAL$ ./aco_sequencial < /home/dvzk/UFG/CAD/TRABFINAL/MAPS/map25.txt
