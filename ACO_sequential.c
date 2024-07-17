@@ -36,21 +36,15 @@ int proximaCidade(struct formiga *formiga, float distancias[CIDADES][CIDADES], f
 
 // Função para obter a matriz de distâncias a partir do arquivo
 void obterMatrizDistancias() {
-    // nome do arquivo
-    FILE *file = fopen("C:\\Users\\moura\\Searches\\ACO\\MAPS\\map100.txt", "r");
-    if (!file) {
-        printf("Erro ao abrir o arquivo de distâncias.\n");
-        exit(1);
-    }
     int i, j;
     float k;
-    while (fscanf(file, "%d %d %f", &i, &j, &k) == 3) {
+    // Lendo as distâncias entre as cidades
+    while (scanf("%i %i %f", &i, &j, &k) == 3) {
         distancias[i][j] = k;
         distancias[j][i] = k;
         feromonios[i][j] = FEROMONIO_INICIAL;
         feromonios[j][i] = FEROMONIO_INICIAL;
     }
-    fclose(file);
 }
 
 // MAIN
