@@ -6,9 +6,9 @@
 #include <curand_kernel.h>
 
 // PARÂMETROS
-#define CIDADES 100
+#define CIDADES 25
 #define FORMIGAS 4000
-#define DIST_MAX 100
+#define DIST_MAX 150
 #define ALFA 1
 #define BETA 5
 #define EVA 0.5
@@ -36,16 +36,21 @@ __global__ void inicializarFormigasCUDA(struct formiga *formigas, int numFormiga
 __global__ void moverFormigasCUDA(struct formiga *formigas, float *distancias, float *feromonios, int numFormigas, int numCidades, float feromonioInicial, float evap, float qntdFeromonio, int maxTours, float *melhorDistancia, curandState *states);
 __device__ int proximaCidadeCUDA(struct formiga *formiga, float *distancias, float *feromonios, int numCidades, curandState *state);
 
-// Função para obter a matriz de distâncias a partir da entrada
+// Verificar se a entrada está dentro dos limites permitidos
 void obterMatrizDistancias() {
     int i, j;
     float k;
     // Lendo as distâncias entre as cidades
     while (scanf("%i %i %f", &i, &j, &k) == 3) {
-        distancias[i][j] = k;
-        distancias[j][i] = k; 
-        feromonios[i][j] = FEROMONIO_INICIAL;
-        feromonios[j][i] = FEROMONIO_INICIAL;
+        if (i < CIDADES && j < CIDADES && k <= DIST_MAX) {
+            distancias[i][j] = k;
+            distancias[j][i] = k; 
+            feromonios[i][j] = FEROMONIO_INICIAL;
+            feromonios[j][i] = FEROMONIO_INICIAL;
+        } else {
+            printf("Erro: Indices fora do limite ou distancia maior que o permitido.\n");
+            exit(1);
+        }
     }
 }
 
@@ -91,6 +96,7 @@ int main() {
     // Copiar formigas de volta para a CPU para verificação
     cudaMemcpy(formigas, d_formigas, FORMIGAS * sizeof(struct formiga), cudaMemcpyDeviceToHost);
 
+/*
     // Imprimir alguns exemplos das variáveis na CPU
     for (int i = 0; i < 5; ++i) {
         printf("Formiga %d: Comprimento do Tour: %f\n", i, formigas[i].comprimentoTour);
@@ -105,6 +111,7 @@ int main() {
         }
         printf("\n");
     }
+*/
 
     // Liberar memória da GPU
     cudaFree(d_formigas);

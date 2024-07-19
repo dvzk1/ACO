@@ -5,9 +5,9 @@
 #include <omp.h>
 
 // PARÂMETROS
-#define CIDADES 100
+#define CIDADES 25
 #define FORMIGAS 4000
-#define DIST_MAX 100
+#define DIST_MAX 150
 #define ALFA 1
 #define BETA 5
 #define EVA 0.5
