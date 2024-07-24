@@ -5,7 +5,12 @@
 #include <omp.h>
 
 // PARÂMETROS
-#define CIDADES 25
+// se for executar outras matrizes, mudar o valor de cidades para a quantidade de cidades da matriz
+// estamos executando para 100x100 (100 cidades)
+
+#define CIDADES 100 // definir tam. da matriz
+
+// parametros standard
 #define FORMIGAS 4000
 #define DIST_MAX 150
 #define ALFA 1
@@ -96,6 +101,9 @@ int proximaCidade(struct formiga *formiga, float distancias[CIDADES][CIDADES], f
 void moverFormigas(struct formiga *formigas, float distancias[CIDADES][CIDADES], float feromonios[CIDADES][CIDADES], int numFormigas, int numCidades, float *melhorDistancia) {
     #pragma omp parallel
     {
+        int num_threads = omp_get_num_threads();
+        printf("Número de threads: %d\n", num_threads);
+
         float melhorDistanciaLocal = *melhorDistancia;
         float localFeromonios[CIDADES][CIDADES] = {0}; // Matriz de feromônios local para cada thread
 

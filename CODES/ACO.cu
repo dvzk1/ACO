@@ -6,7 +6,12 @@
 #include <curand_kernel.h>
 
 // PARÂMETROS
-#define CIDADES 25
+// se for executar outras matrizes, mudar o valor de cidades para a quantidade de cidades da matriz
+// estamos executando para 100x100 (100 cidades)
+
+#define CIDADES 100 // definir tam. da matriz
+
+// parametros standard
 #define FORMIGAS 4000
 #define DIST_MAX 150
 #define ALFA 1
@@ -36,11 +41,10 @@ __global__ void inicializarFormigasCUDA(struct formiga *formigas, int numFormiga
 __global__ void moverFormigasCUDA(struct formiga *formigas, float *distancias, float *feromonios, int numFormigas, int numCidades, float feromonioInicial, float evap, float qntdFeromonio, int maxTours, float *melhorDistancia, curandState *states);
 __device__ int proximaCidadeCUDA(struct formiga *formiga, float *distancias, float *feromonios, int numCidades, curandState *state);
 
-// Verificar se a entrada está dentro dos limites permitidos
+// Verificando se a entrada está dentro dos limites permitidos
 void obterMatrizDistancias() {
     int i, j;
     float k;
-    // Lendo as distâncias entre as cidades
     while (scanf("%i %i %f", &i, &j, &k) == 3) {
         if (i < CIDADES && j < CIDADES && k <= DIST_MAX) {
             distancias[i][j] = k;

@@ -1,4 +1,9 @@
-dvzk@UMRPC:~/UFG/CAD/TRABFINAL$ gcc -o aco_sequencial ACO.c -lm
-dvzk@UMRPC:~/UFG/CAD/TRABFINAL$ nvcc -o aco ACO.cu -lcudart
-dvzk@UMRPC:~/UFG/CAD/TRABFINAL$ ./aco < /home/dvzk/UFG/CAD/TRABFINAL/MAPS/map25.txt
-dvzk@UMRPC:~/UFG/CAD/TRABFINAL$ ./aco_sequencial < /home/dvzk/UFG/CAD/TRABFINAL/MAPS/map25.txt
+# compilar
+gcc -o aco_sequencial ACO_sequential.c -lm
+gcc -o aco_OpenMP ACO_OpenMP.c -lm -fopenmp
+nvcc -o aco ACO.cu -lcudart
+
+# rodar o executavel junto com a matriz utilizando <
+./aco < /ACO/MAPS/map100.txt
+./aco_sequencial < /ACO/MAPS/map100.txt
+./aco_OpenMP  < /ACO/MAPS/map100.txt

@@ -4,7 +4,12 @@
 #include <time.h>
 
 // PARÂMETROS
-#define CIDADES 25
+// se for executar outras matrizes, mudar o valor de cidades para a quantidade de cidades da matriz
+// estamos executando para 100x100 (100 cidades)
+
+#define CIDADES 100 // definir tam. da matriz
+
+// parametros standard
 #define FORMIGAS 4000
 #define DIST_MAX 150
 #define ALFA 1
@@ -29,12 +34,12 @@ float feromonios[CIDADES][CIDADES];
 struct formiga formigas[FORMIGAS];
 float melhorDistancia = (float)DIST_TOTAL_MAXIMA;
 
-// Funções auxiliares
+// Funções 
 void inicializarFormigas(struct formiga *formigas, int numFormigas, int numCidades);
 void moverFormigas(struct formiga *formigas, float distancias[CIDADES][CIDADES], float feromonios[CIDADES][CIDADES], int numFormigas, int numCidades, float feromonioInicial, float evap, float qntdFeromonio, int maxTours, float *melhorDistancia);
 int proximaCidade(struct formiga *formiga, float distancias[CIDADES][CIDADES], float feromonios[CIDADES][CIDADES], int numCidades);
 
-// Função para obter a matriz de distâncias a partir do arquivo
+// Função para obter a matriz de distâncias 
 void obterMatrizDistancias() {
     int i, j;
     float k;
@@ -176,10 +181,9 @@ int proximaCidade(struct formiga *formiga, float distancias[CIDADES][CIDADES], f
         }
     }
 
-    // Gerar um número aleatório entre 0 e 1
+    
     double limite = (double)rand() / RAND_MAX;
     double probAcumulada = 0.0;
-    // Calcular a probabilidade acumulada e selecionar a próxima cidade
     for (int para = 0; para < numCidades; ++para) {
         if (formiga->visitado[para] == 0) {
             probAcumulada += pow(feromonios[de][para], ALFA) * pow(1.0 / distancias[de][para], BETA) / denom;
